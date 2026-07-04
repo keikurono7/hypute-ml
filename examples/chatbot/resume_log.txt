@@ -1,0 +1,15 @@
+Device: cuda  |  Resuming from epoch 17
+  Loaded chatbot_best.pt (epoch 16 weights)
+  Epoch 17/25  train_ppl   53.7  val_ppl   51.4 *
+  Epoch 18/25  train_ppl   52.1  val_ppl   49.7 *
+  Epoch 19/25  train_ppl   51.9  val_ppl   49.9
+  Epoch 20/25  train_ppl   51.7  val_ppl   49.3 *
+  Epoch 21/25  train_ppl   51.4  val_ppl   48.8 *
+  Epoch 22/25  train_ppl   51.2  val_ppl   48.7 *
+  Epoch 23/25  train_ppl   51.1  val_ppl   48.8
+  Epoch 24/25  train_ppl   50.9  val_ppl   48.7 *
+  Epoch 25/25  train_ppl   50.8  val_ppl   48.4 *
+
+Exporting …
+  Saved chatbot.hgru  (9.0 MB int8)
+Done.

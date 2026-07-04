@@ -1,0 +1,13 @@
+Device: cuda
+Loading datasets …
+  Cornell: 83,097 conversations
+  Downloading DailyDialog …
+  DailyDialog parse failed (File is not a zip file), skipping
+  Downloading EmpatheticDialogues …
+  EmpatheticDialogues: 23,078 conversations
+  Total: 106,175 conversations
+Building vocabulary …
+  Vocab: 16000 words
+  Total tokens: 6,096,579
+  Parameters: 41.9 M  (168 MB fp32)
+

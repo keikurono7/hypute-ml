@@ -1,0 +1,49 @@
+name: Inference Benchmark
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: sudo apt-get install -y cmake g++
+
+      - name: Build
+        run: |
+          mkdir build && cd build
+          cmake .. -DCMAKE_BUILD_TYPE=Release
+          make hypute_ml_bench hypute_ml_eval -j$(nproc)
+
+      - name: Smoke test
+        run: ./build/hypute_ml_eval
+
+      - name: Benchmark (75M params)
+        id: bench
+        run: |
+          OUTPUT=$(HML_VOCAB=50000 HML_EMBED=256 HML_HIDDEN=1024 \
+                   HML_LAYERS=12 HML_OUTPUT=50000 \
+                   HML_RUNS=500 HML_SEQ=8 ./build/hypute_ml_bench)
+          echo "$OUTPUT"
+          echo "result<<EOF" >> $GITHUB_OUTPUT
+          echo "$OUTPUT"     >> $GITHUB_OUTPUT
+          echo "EOF"         >> $GITHUB_OUTPUT
+
+      - name: Write job summary
+        run: |
+          cat >> $GITHUB_STEP_SUMMARY << 'SUMMARY'
+          ## Hypute ML — Inference Benchmark
+
+          **Model:** 75.8 M parameters · vocab 50 000 · embed 256 · hidden 1024 · 12 layers · output 50 000
+
+          SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "${{ steps.bench.outputs.result }}" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
